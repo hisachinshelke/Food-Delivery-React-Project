@@ -22,6 +22,65 @@ const Header = () => {
   );
 };
 
+
+
+const Body = () => {
+  return (
+    <div className="body">
+      <div className="search">Search</div>
+      <div className="rest-container">
+      {restDataList.map((restaurant) => (
+          <RestaurantCard key={restaurant.info.id} restData={restaurant} />
+        ))}
+      </div>
+    </div>
+  );
+};
+
+const RestaurantCard = (props) => {
+  console.log(props);
+  const { restData } = props;
+  const {
+    cloudinaryImageId,
+    name,
+    cuisines,
+    avgRating,
+    costForTwo,
+    slaString,
+    locality
+  } = restData?.info;
+  return (
+    <div className="rest-card">
+      <img
+        className="res-logo"
+        src={
+          "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_264,h_288,c_fill/" +
+          cloudinaryImageId
+        }
+        alt="res-logo"
+      />
+      <h1>{name}</h1>
+      <h3>{cuisines.join(", ")}</h3>
+      <h3>{avgRating}</h3>
+      <h3>{restData.info.costForTwo}</h3>
+      <h3>{restData.info.sla.slaString}</h3>
+      <h3>{locality}</h3>
+    </div>
+  );
+};
+
+const AppLayout = () => {
+  return (
+    <div className="app">
+      <Header />
+      <Body />
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<AppLayout />);
+
 const restDataList = [
   {
     info: {
@@ -1429,83 +1488,6 @@ const restDataList = [
     },
   },
 ];
-
-const Body = () => {
-  return (
-    <div className="body">
-      <div className="search">Search</div>
-      <div className="rest-container">
-        <RestaurantCard
-          // restData = {restDataObj}
-          restData={restDataList[0]}
-        />
-        <RestaurantCard // restData = {restDataObj}
-          restData={restDataList[1]}
-        />
-        <RestaurantCard // restData = {restDataObj}
-          restData={restDataList[2]} />
-        <RestaurantCard restData={restDataList[3]} />
-        <RestaurantCard restData={restDataList[4]} />
-        <RestaurantCard restData={restDataList[5]} />
-        <RestaurantCard restData={restDataList[6]} />
-        <RestaurantCard restData={restDataList[7]} />
-        <RestaurantCard restData={restDataList[8]} />
-        <RestaurantCard restData={restDataList[9]} />
-        <RestaurantCard restData={restDataList[10]} />
-        <RestaurantCard restData={restDataList[11]} />
-        <RestaurantCard restData={restDataList[13]} />
-        <RestaurantCard restData={restDataList[14]} />
-        <RestaurantCard restData={restDataList[15]} />
-        <RestaurantCard restData={restDataList[16]} />
-        <RestaurantCard restData={restDataList[17]} />
-        <RestaurantCard restData={restDataList[18]} />
-      </div>
-    </div>
-  );
-};
-
-const RestaurantCard = (props) => {
-  console.log(props);
-  const { restData } = props;
-  const {
-    cloudinaryImageId,
-    name,
-    cuisines,
-    avgRating,
-    costForTwo,
-    slaString,
-    locality
-  } = restData?.info;
-  return (
-    <div className="rest-card">
-      <img
-        className="res-logo"
-        src={
-          "https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_264,h_288,c_fill/" +
-          cloudinaryImageId
-        }
-        alt="res-logo"
-      />
-      <h1>{name}</h1>
-      <h3>{cuisines.join(", ")}</h3>
-      <h3>{avgRating}</h3>
-      <h3>{restData.info.costForTwo}</h3>
-      <h3>{restData.info.sla.slaString}</h3>
-    </div>
-  );
-};
-
-const AppLayout = () => {
-  return (
-    <div className="app">
-      <Header />
-      <Body />
-    </div>
-  );
-};
-
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<AppLayout />);
 
 // const restDataObj = {
 //   "info": {
