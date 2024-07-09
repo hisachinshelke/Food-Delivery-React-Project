@@ -1,61 +1,32 @@
 import RestaurantCard from "./RestaurantCard";
 import restDataList from "../utils/mockData";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import ShimmerUI from "./Shimmer";
 
 const Body = () => {
   //local state variable - super power using hooks - use states
-  const [listOfRestaurants, setListOfRestaurants] = useState(restDataList);
+  const [listOfRestaurants, setListOfRestaurants] = useState([]);
 
-  let listOfRestaurantsJS = [
-    {
-      info: {
-        id: "765152",
-        name: "Pizza Hut",
-        cloudinaryImageId: "490629b70f89da8a5b93fc199ece335e",
-        locality: "Pimpri chinchwad",
-        areaName: "Punawale",
-        costForTwo: "₹350 for two",
-        cuisines: ["Pizzas"],
-        avgRating: 4.1,
-        parentId: "721",
-        sla: {
-          slaString: "30-35 mins",
-        },
-      },
-    },
-    {
-      info: {
-        id: "688719",
-        name: "Chinese Wok",
-        cloudinaryImageId: "e0839ff574213e6f35b3899ebf1fc597",
-        locality: "Rahatan",
-        areaName: "Pimple Saudagar",
-        costForTwo: "₹250 for two",
-        cuisines: ["Chinese", "Asian", "Tibetan", "Desserts"],
-        avgRating: 3.5,
-        parentId: "61955",
-        sla: {
-          slaString: "40-45 mins",
-        },
-      },
-    },
-    {
-      info: {
-        id: "68719",
-        name: "McDonlads",
-        cloudinaryImageId: "e0839ff574213e6f35b3899ebf1fc597",
-        locality: "Rahatan",
-        areaName: "Pimple Saudagar",
-        costForTwo: "₹250 for two",
-        cuisines: ["Chinese", "Asian", "Tibetan", "Desserts"],
-        avgRating: 4.5,
-        parentId: "61955",
-        sla: {
-          slaString: "40-45 mins",
-        },
-      },
-    },
-  ];
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    // resolve the promises
+    const data = await fetch(
+      "https://www.swiggy.com/dapi/restaurants/list/v5?lat=12.9352403&lng=77.624532&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING"
+    ); //privided by browser engine
+
+    //convert data to json - wait for promise to resovle and convert json
+    const json = await data.json();
+    setListOfRestaurants(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
+  };
+
+  if(listOfRestaurants.length == 0) {
+    return (<ShimmerUI/>);
+  }
 
   return (
     <div className="body">
