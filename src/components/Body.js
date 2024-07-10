@@ -6,6 +6,11 @@ import ShimmerUI from "./Shimmer";
 const Body = () => {
   //local state variable - super power using hooks - use states
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
+  const [filteredListOfRestaurants, setFilteredListOfRestaurants] = useState(
+    []
+  );
+
+  const [searchText, setSearchText] = useState([]);
 
   useEffect(() => {
     fetchData();
@@ -22,15 +27,37 @@ const Body = () => {
     setListOfRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
+    setFilteredListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
   };
 
-  if(listOfRestaurants.length == 0) {
-    return (<ShimmerUI/>);
+  if (listOfRestaurants.length == 0) {
+    return <ShimmerUI />;
   }
 
   return (
     <div className="body">
       <div className="filter">
+        <div className="search">
+          <input
+            type="text"
+            className="search-box"
+            value={searchText}
+            onChange={(e) => {
+              setSearchText(e.target.value);
+            }}
+          ></input>
+          <button
+            onClick={() => {
+              const filteredResList = listOfRestaurants.filter((res) =>
+                res.info.name.toLowerCase().includes(searchText.toLowerCase())
+              );
+              setFilteredListOfRestaurants(filteredResList);
+            }}
+          >
+            Search
+          </button>
+        </div>
+
         <button
           className="filter-btn"
           onClick={() => {
@@ -44,7 +71,7 @@ const Body = () => {
         </button>
       </div>
       <div className="rest-container">
-        {listOfRestaurants.map((restaurant) => (
+        {filteredListOfRestaurants.map((restaurant) => (
           <RestaurantCard key={restaurant.info.id} restData={restaurant} />
         ))}
       </div>
