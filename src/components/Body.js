@@ -2,6 +2,7 @@ import RestaurantCard from "./RestaurantCard";
 import restDataList from "../utils/mockData";
 import { useEffect, useState } from "react";
 import ShimmerUI from "./Shimmer";
+import { Link } from "react-router-dom";
 
 const Body = () => {
   //local state variable - super power using hooks - use states
@@ -27,7 +28,9 @@ const Body = () => {
     setListOfRestaurants(
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
-    setFilteredListOfRestaurants(json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants);
+    setFilteredListOfRestaurants(
+      json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
+    );
   };
 
   if (listOfRestaurants.length == 0) {
@@ -72,7 +75,12 @@ const Body = () => {
       </div>
       <div className="rest-container">
         {filteredListOfRestaurants.map((restaurant) => (
-          <RestaurantCard key={restaurant.info.id} restData={restaurant} />
+          <Link
+            to={"restaurant/" + restaurant.info.id}
+            key={restaurant.info.id}
+          >
+            <RestaurantCard restData={restaurant} />
+          </Link>
         ))}
       </div>
     </div>
