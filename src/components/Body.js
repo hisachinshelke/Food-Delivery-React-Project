@@ -37,8 +37,6 @@ const Body = () => {
   const onlineStatus = useOnlineStatus();
 
   if (onlineStatus == false) {
-    console.log("NW status called");
-
     return (
       <h1>
         Looks like you are offline!! Please check your internet connection
