@@ -3,6 +3,7 @@ import restDataList from "../utils/mockData";
 import { useEffect, useState } from "react";
 import ShimmerUI from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 const Body = () => {
   //local state variable - super power using hooks - use states
@@ -32,6 +33,18 @@ const Body = () => {
       json?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants
     );
   };
+
+  const onlineStatus = useOnlineStatus();
+
+  if (onlineStatus == false) {
+    console.log("NW status called");
+
+    return (
+      <h1>
+        Looks like you are offline!! Please check your internet connection
+      </h1>
+    );
+  }
 
   if (listOfRestaurants.length == 0) {
     return <ShimmerUI />;
