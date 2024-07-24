@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import ShimmerUI from "./Shimmer";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../utils/useOnlineStatus";
+import { useContext } from "react";
+import UserContext from "../utils/UserContext";
 
 const Body = () => {
   //local state variable - super power using hooks - use states
@@ -51,6 +53,8 @@ const Body = () => {
     return <ShimmerUI />;
   }
 
+  const { loggedInUser, setUserName } = useContext(UserContext);
+
   return (
     <div className="body">
       <div className="filter flex">
@@ -88,6 +92,13 @@ const Body = () => {
           >
             Top Rated Restaurants
           </button>
+
+          <label>User Name : </label>
+          <input
+            className="border border-black px-2 mx-2"
+            onChange={(e) => setUserName(e.target.value)}
+            value={loggedInUser}
+          ></input>
         </div>
       </div>
       <div className="rest-container flex flex-wrap">
