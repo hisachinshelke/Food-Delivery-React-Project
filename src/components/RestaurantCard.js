@@ -31,4 +31,18 @@ const RestaurantCard = (props) => {
   );
 };
 
+//higer order component
+//input restcard and output is RestcardPromoted
+export const withPromotedLabel = (RestaurantCard) => {
+  return (props) => {
+    //component is a fucntion returning compont and component itseld returns a piece of jsx
+    return (
+      <div>
+        <label>Promoted</label>
+        <RestaurantCard />
+      </div>
+    );
+  };
+};
+
 export default RestaurantCard;
